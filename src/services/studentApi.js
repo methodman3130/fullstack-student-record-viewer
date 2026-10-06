@@ -1,11 +1,17 @@
-const apiUrl = import.meta.env.VITE_API_URL ?? 'http://localhost:5000/api/students'
+import { request } from './apiClient'
 
-export async function getStudents() {
-  const response = await fetch(apiUrl)
+export function getStudents() {
+  return request('/students')
+}
 
-  if (!response.ok) {
-    throw new Error(`Student API request failed with status ${response.status}`)
-  }
+export function createStudent(student) {
+  return request('/students', { method: 'POST', body: student })
+}
 
-  return response.json()
+export function updateStudent(id, student) {
+  return request(`/students/${id}`, { method: 'PUT', body: student })
+}
+
+export function deleteStudent(id) {
+  return request(`/students/${id}`, { method: 'DELETE' })
 }
