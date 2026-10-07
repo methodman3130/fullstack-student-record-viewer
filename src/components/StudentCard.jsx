@@ -1,12 +1,12 @@
 import { calculateAverage, hasPassed } from '../utils/studentCalculations'
 
-function StudentCard({ student }) {
+function StudentCard({ student, canManage = false, onEdit, onDelete }) {
   const average = calculateAverage(student.scores)
   const passed = hasPassed(student.scores)
 
   return (
     <article className="card h-100 border-0 shadow-sm">
-      <div className="card-body p-4">
+      <div className="card-body p-4 d-flex flex-column">
         <div className="d-flex justify-content-between gap-3 mb-3">
           <div>
             <p className="text-secondary text-uppercase small fw-semibold mb-1">Section {student.section}</p>
@@ -27,6 +27,25 @@ function StudentCard({ student }) {
             <p className="mb-0 fs-4 fw-bold text-primary">{average.toFixed(2)}</p>
           </div>
         </div>
+
+        {canManage && (
+          <div className="border-top mt-3 pt-3 d-flex gap-2">
+            <button
+              className="btn btn-sm btn-outline-primary"
+              type="button"
+              onClick={() => onEdit(student)}
+            >
+              Edit
+            </button>
+            <button
+              className="btn btn-sm btn-outline-danger"
+              type="button"
+              onClick={() => onDelete(student)}
+            >
+              Delete
+            </button>
+          </div>
+        )}
       </div>
     </article>
   )
